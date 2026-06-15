@@ -25,28 +25,16 @@
         button { background: #000; color: #fff; border: none; padding: 15px 40px; border-radius: 50px; font-weight: bold; cursor: pointer; transition: transform 0.2s; }
         button:hover { transform: scale(1.05); }
 
-        /* --- ESTILO Y ANIMACIÓN BOTÓN VOLVER --- */
+        /* --- BOTÓN VOLVER (SIN SELECCIÓN) --- */
         .btn-back {
-            background: #1a202c;
-            color: #ffffff;
-            padding: 12px 25px;
-            border-radius: 50px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 20px;
+            background: #1a202c; color: #ffffff; padding: 12px 25px; border-radius: 50px; border: none; cursor: pointer; font-weight: 600; font-size: 14px; margin-bottom: 20px;
             transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            /* --- EVITAR SELECCIÓN --- */
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
+            user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;
         }
         .btn-back:hover { transform: scale(1.05); background: #333; }
         .btn-back:active { transform: scale(0.95); }
 
-        /* --- MARCAS (INALTERADO) --- */
+        /* --- MARCAS --- */
         .brand-grid { display: grid; grid-template-columns: 1fr; gap: 14px; padding-bottom: 20px; }
         @media (min-width: 600px) { .brand-grid { grid-template-columns: repeat(2, 1fr); } }
         .brand-card { position: relative; height: 140px; border-radius: 16px; overflow: hidden; cursor: pointer; background-size: cover; background-position: center; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
@@ -112,7 +100,7 @@
             'Hugo Boss': [{ img: 'https://images.unsplash.com/photo-1593032465175-481ac7f401a0?w=800', name: 'Camisa' }],
             'Polo Ralph Lauren': [{ img: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=800', name: 'Polo RL' }],
             'Adidas': [{ img: 'https://images.unsplash.com/photo-1518002171953-a080ee817e1f?w=800', name: 'Tenis' }],
-            'Nike': [{ img: 'nike1.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike2.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike3.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike4.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike5.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike6.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike7.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike8.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike9.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike10.jpeg', name: 'conjunto estilo deportivo' }],
+            'Nike': [{ img: 'nike1.jpeg', name: 'conjunto estilo deportivo' },{ img: 'nike2.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike3.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike4.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike5.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike6.jpeg', name: 'conjunto estilo deportivo' },{ img: 'nike7.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike8.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike9.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike10.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike11.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike12.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike13.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike14.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike15.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike16.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike17.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike18.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike19.jpeg', name: 'conjunto estilo deportivo' }, { img: 'nike20.jpeg', name: 'conjunto estilo deportivo' }],
             'Nautica': [{ img: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=800', name: 'Chaqueta' }]
         };
 
@@ -129,9 +117,10 @@
             (data[brand] || []).forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'product-card';
+                // Enviamos el nombre y la imagen al WhatsApp
                 div.innerHTML = `
                     <img src="${item.img}" class="product-img" onclick="openLightbox('${item.img}')">
-                    <div class="btn-wa" onclick="askWA('${item.name}')">Consultar por WhatsApp 🟢</div>
+                    <div class="btn-wa" onclick="askWA('${item.name}', '${item.img}')">Consultar por WhatsApp 🟢</div>
                 `;
                 grid.appendChild(div);
             });
@@ -142,8 +131,9 @@
             document.getElementById('brands-view').classList.remove('hidden');
         }
 
-        function askWA(name) {
-            window.open(`https://wa.me/+593992791335?text=${encodeURIComponent('Hola, me interesa este artículo: ' + name)}`);
+        function askWA(name, img) {
+            const message = `Hola, me interesa este artículo: ${name}. Puedes ver la foto aquí: ${img}`;
+            window.open(`https://wa.me/+593992791335?text=${encodeURIComponent(message)}`);
         }
 
         function openLightbox(imgUrl) {
